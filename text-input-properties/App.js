@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Text, Alert } from 'react-native';
+import { View, TextInput, StyleSheet, Text, Alert, Button } from 'react-native';
 
 const SubmitExample = () => {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
+  
+  
+  const emailvalid = (input) => {
+    if (!input.includes('@')) {
+      setEmail(input);
+    } else {
+      setEmail(input);
+    }
+  };
+  
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+
 
   const HandleSubmit = () => {
     Alert.alert('Submitted Text:', `First Name: ${firstname}\nLast Name: ${lastname}\nEmail: ${email}\nPhone: ${phone}`);
@@ -30,9 +41,10 @@ const SubmitExample = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Enter Email"
+        placeholder="Enter Email ....example123@gmail.com"
         keyboardType="email-address"
-        onChangeText={(value) => setEmail(value)}
+        value={email}
+        onChangeText={emailvalid} // use the custom email handler
         returnKeyType="done"
         onSubmitEditing={HandleSubmit}
       />
@@ -49,15 +61,13 @@ const SubmitExample = () => {
         placeholder="Enter Password"
         secureTextEntry={true}
         onChangeText={(value) => setPassword(value)}
+        maxLength={12}
       />
-      <Text>Password length: {password.length}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Press Enter"
-        keyboardType=""
-
-        returnKeyType="done"
-        onSubmitEditing={HandleSubmit}
+      
+      <Button
+          title="Submit"
+          onPress={HandleSubmit}
+          returnKeyType="done"
       />
     </View>
   );
@@ -76,6 +86,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 10,
     borderRadius: 5,
+    marginBottom: 10,
   },
 });
 
